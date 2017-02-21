@@ -18,28 +18,11 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="source">Source</param>
         /// <param name="parentId">Parent category identifier</param>
-        /// <param name="ignoreCategoriesWithoutExistingParent">A value indicating whether categories without parent category in provided category list (source) should be ignored</param>
         /// <returns>Sorted categories</returns>
-        public static IList<Category> SortCategoriesForTree(this IList<Category> source, int parentId = 0, bool ignoreCategoriesWithoutExistingParent = false)
+        public static IEnumerable<Category> SortCategoriesForTree(this IEnumerable<Category> source, int parentId = 0)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-
-            var result = new List<Category>();
-
-            foreach (var cat in source.Where(c => c.ParentCategoryId == parentId).ToList())
-            {
-                result.Add(cat);
-                result.AddRange(SortCategoriesForTree(source, cat.Id, true));
-            }
-            if (!ignoreCategoriesWithoutExistingParent && result.Count != source.Count)
-            {
-                //find categories without parent in provided category source and insert them into result
-                foreach (var cat in source)
-                    if (result.FirstOrDefault(x => x.Id == cat.Id) == null)
-                        result.Add(cat);
-            }
-            return result;
+            return source.Where(category => category.ParentCategoryId == parentId)
+                .SelectMany(currentCategory => new[] { currentCategory }.Concat(source.SortCategoriesForTree(currentCategory.Id)));
         }
 
         /// <summary>
