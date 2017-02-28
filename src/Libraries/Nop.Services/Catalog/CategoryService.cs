@@ -231,7 +231,7 @@ namespace Nop.Services.Catalog
                 totalRecordsParameter.DbType = DbType.Int32;
 
                 //invoke stored procedure
-                var categories = _dbContext.ExecuteStoredProcedureList<Category>("Get_CategoryTree",
+                var categories = _dbContext.ExecuteStoredProcedureList<Category>("CategoryLoadAllPaged",
                     showHiddenParameter, nameParameter, storeIdParameter, customerRoleIdsParameter,
                     pageIndexParameter, pageSizeParameter, totalRecordsParameter);
                 var totalRecords = (totalRecordsParameter.Value != DBNull.Value) ? Convert.ToInt32(totalRecordsParameter.Value) : 0;
@@ -242,49 +242,54 @@ namespace Nop.Services.Catalog
             else
             {
                 //stored procedures aren't supported. Use LINQ
-
-                //sort categories to tree
-                var query = _categoryRepository.Table.OrderBy(c => c.DisplayOrder).ThenBy(c => c.Id)
-                    .ToList().SortCategoriesForTree();
-
-                //whether to show hidden
+                var query = _categoryRepository.Table;
                 if (!showHidden)
                     query = query.Where(c => c.Published);
-
-                //filter by name
-                if (!string.IsNullOrEmpty(categoryName))
+                if (!String.IsNullOrWhiteSpace(categoryName))
                     query = query.Where(c => c.Name.Contains(categoryName));
-
-                //not deleted
                 query = query.Where(c => !c.Deleted);
+                query = query.OrderBy(c => c.ParentCategoryId).ThenBy(c => c.DisplayOrder).ThenBy(c => c.Id);
 
-                //filter by ACL (access control list)
-                if (!showHidden && !_catalogSettings.IgnoreAcl)
+                if ((storeId > 0 && !_catalogSettings.IgnoreStoreLimitations) || (!showHidden && !_catalogSettings.IgnoreAcl))
                 {
-                    var allowedCustomerRolesIds = _workContext.CurrentCustomer.GetCustomerRoleIds();
-                    query = from c in query
-                            join acl in _aclRepository.Table
-                            on new { c1 = c.Id, c2 = "Category" } equals new { c1 = acl.EntityId, c2 = acl.EntityName } into c_acl
-                            from acl in c_acl.DefaultIfEmpty()
-                            where !c.SubjectToAcl || allowedCustomerRolesIds.Contains(acl.CustomerRoleId)
-                            select c;
-                }
+                    if (!showHidden && !_catalogSettings.IgnoreAcl)
+                    {
+                        //ACL (access control list)
+                        var allowedCustomerRolesIds = _workContext.CurrentCustomer.GetCustomerRoleIds();
+                        query = from c in query
+                                join acl in _aclRepository.Table
+                                on new { c1 = c.Id, c2 = "Category" } equals new { c1 = acl.EntityId, c2 = acl.EntityName } into c_acl
+                                from acl in c_acl.DefaultIfEmpty()
+                                where !c.SubjectToAcl || allowedCustomerRolesIds.Contains(acl.CustomerRoleId)
+                                select c;
+                    }
+                    if (storeId > 0 && !_catalogSettings.IgnoreStoreLimitations)
+                    {
+                        //Store mapping
+                        query = from c in query
+                                join sm in _storeMappingRepository.Table
+                                on new { c1 = c.Id, c2 = "Category" } equals new { c1 = sm.EntityId, c2 = sm.EntityName } into c_sm
+                                from sm in c_sm.DefaultIfEmpty()
+                                where !c.LimitedToStores || storeId == sm.StoreId
+                                select c;
+                    }
 
-                //filter by store mapping
-                if (storeId > 0 && !_catalogSettings.IgnoreStoreLimitations)
-                {
+                    //only distinct categories (group by ID)
                     query = from c in query
-                            join sm in _storeMappingRepository.Table
-                            on new { c1 = c.Id, c2 = "Category" } equals new { c1 = sm.EntityId, c2 = sm.EntityName } into c_sm
-                            from sm in c_sm.DefaultIfEmpty()
-                            where !c.LimitedToStores || storeId == sm.StoreId
-                            select c;
+                            group c by c.Id
+                            into cGroup
+                            orderby cGroup.Key
+                            select cGroup.FirstOrDefault();
+                    query = query.OrderBy(c => c.ParentCategoryId).ThenBy(c => c.DisplayOrder).ThenBy(c => c.Id);
                 }
+            
+                var unsortedCategories = query.ToList();
 
-                var categories = query.ToList();
+                //sort categories
+                var sortedCategories = unsortedCategories.SortCategoriesForTree();
 
                 //paging
-                return new PagedList<Category>(categories, pageIndex, pageSize);
+                return new PagedList<Category>(sortedCategories, pageIndex, pageSize);
             }
         }
 
