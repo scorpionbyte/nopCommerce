@@ -3,23 +3,23 @@
     public enum RoundingType
     {
         /// <summary>
-        /// Default rounding (Match.Round(num, 2))
+        /// Default rounding (Match.Round(num, 2)).
         /// </summary>
         Rounding001 = 0,
         /// <summary>
-        /// Prices are rounded up to the nearest multiple of 5 cents for sales ending in: 3¢ & 4¢ round to 5¢; and, 8¢ & 9¢ round to 10¢
+        /// Prices are rounded up to the nearest multiple of 5 cents for sales ending in: 3¢ & 4¢ round to 5¢; and, 8¢ & 9¢ round to 10¢.
         /// </summary>
         Rounding005Up = 1,
         /// <summary>
-        /// Prices are rounded down to the nearest multiple of 5 cents for sales ending in: 1¢ & 2¢ to 0¢; and, 6¢ & 7¢ to 5¢;
+        /// Prices are rounded down to the nearest multiple of 5 cents for sales ending in: 1¢ & 2¢ to 0¢; and, 6¢ & 7¢ to 5¢.
         /// </summary>
         Rounding005Down = 2,
         /// <summary>
-        /// round up to the nearest 10 cent value for sales ending in 5¢;
+        /// Round up to the nearest 10 cent value for sales ending in 5¢.
         /// </summary>
         Rounding01Up = 3,
         /// <summary>
-        /// round down to the nearest 10 cent value for sales ending in 5¢;
+        /// Round down to the nearest 10 cent value for sales ending in 5¢.
         /// </summary>
         Rounding01Down = 4,
         /// <summary>
