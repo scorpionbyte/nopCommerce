@@ -252,9 +252,9 @@ namespace Nop.Admin.Models.Settings
         [NopResourceDisplayName("Admin.Configuration.Settings.Catalog.DisplayBlogMenuItem")]
         public bool DisplayBlogMenuItem { get; set; }
         public bool DisplayBlogMenuItem_OverrideForStore { get; set; }
-        [NopResourceDisplayName("Admin.Configuration.Settings.Catalog.DisplayBoardsMenuItem")]
-        public bool DisplayBoardsMenuItem { get; set; }
-        public bool DisplayBoardsMenuItem_OverrideForStore { get; set; }
+        [NopResourceDisplayName("Admin.Configuration.Settings.Catalog.DisplayForumsMenuItem")]
+        public bool DisplayForumsMenuItem { get; set; }
+        public bool DisplayForumsMenuItem_OverrideForStore { get; set; }
         [NopResourceDisplayName("Admin.Configuration.Settings.Catalog.DisplayContactUsMenuItem")]
         public bool DisplayContactUsMenuItem { get; set; }
         public bool DisplayContactUsMenuItem_OverrideForStore { get; set; }

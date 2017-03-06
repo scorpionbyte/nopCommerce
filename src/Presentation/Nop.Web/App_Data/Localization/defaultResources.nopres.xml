@@ -5115,11 +5115,11 @@
   <LocaleResource Name="Admin.Configuration.Settings.Catalog.DisplayBlogMenuItem.Hint">
     <Value>Check if "blog" menu item should be displayed in the top menu.</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.Configuration.Settings.Catalog.DisplayBoardsMenuItem">
-    <Value>Display "boards"</Value>
+  <LocaleResource Name="Admin.Configuration.Settings.Catalog.DisplayForumsMenuItem">
+    <Value>Display "forums"</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.Configuration.Settings.Catalog.DisplayBoardsMenuItem.Hint">
-    <Value>Check if "boards" menu item should be displayed in the top menu.</Value>
+  <LocaleResource Name="Admin.Configuration.Settings.Catalog.DisplayForumsMenuItem.Hint">
+    <Value>Check if "forums" menu item should be displayed in the top menu.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Configuration.Settings.Catalog.DisplayContactUsMenuItem">
     <Value>Display "contact us"</Value>

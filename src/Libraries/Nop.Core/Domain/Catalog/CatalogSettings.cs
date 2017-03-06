@@ -385,9 +385,9 @@ namespace Nop.Core.Domain.Catalog
         public bool DisplayBlogMenuItem { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to display "boards" menu item
+        /// Gets or sets a value indicating whether to display "forums" menu item
         /// </summary>
-        public bool DisplayBoardsMenuItem { get; set; }
+        public bool DisplayForumsMenuItem { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to display "contact us" menu item

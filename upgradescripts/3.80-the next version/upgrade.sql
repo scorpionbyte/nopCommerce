@@ -2066,11 +2066,11 @@ set @resources='
   <LocaleResource Name="Admin.Configuration.Settings.Catalog.DisplayBlogMenuItem.Hint">
     <Value>Check if "blog" menu item should be displayed on top menu in public store.</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.Configuration.Settings.Catalog.DisplayBoardsMenuItem">
-    <Value>Display "boards"</Value>
+  <LocaleResource Name="Admin.Configuration.Settings.Catalog.DisplayForumsMenuItem">
+    <Value>Display "forums"</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.Configuration.Settings.Catalog.DisplayBoardsMenuItem.Hint">
-    <Value>Check if "boards" menu item should be displayed on top menu in public store.</Value>
+  <LocaleResource Name="Admin.Configuration.Settings.Catalog.DisplayForumsMenuItem.Hint">
+    <Value>Check if "forums" menu item should be displayed on top menu in public store.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Configuration.Settings.Catalog.DisplayContactUsMenuItem">
     <Value>Display "contact us"</Value>
@@ -4752,10 +4752,10 @@ BEGIN
 END
 
 --new setting
-IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'catalogsettings.displayboardsmenuitem')
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'catalogsettings.displayforumsmenuitem')
 BEGIN
     INSERT [Setting] ([Name], [Value], [StoreId])
-    VALUES (N'catalogsettings.displayboardsmenuitem', @displayMenuItems, 0)
+    VALUES (N'catalogsettings.displayforumsmenuitem', @displayMenuItems, 0)
 END
 
 --new setting

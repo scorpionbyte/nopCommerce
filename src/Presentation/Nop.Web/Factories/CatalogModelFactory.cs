@@ -651,7 +651,7 @@ namespace Nop.Web.Factories
                 DisplayProductSearchMenuItem = _catalogSettings.DisplayProductSearchMenuItem,
                 DisplayCustomerInfoMenuItem = _catalogSettings.DisplayCustomerInfoMenuItem,
                 DisplayBlogMenuItem = _catalogSettings.DisplayBlogMenuItem,
-                DisplayBoardsMenuItem = _catalogSettings.DisplayBoardsMenuItem,
+                DisplayForumsMenuItem = _catalogSettings.DisplayForumsMenuItem,
                 DisplayContactUsMenuItem = _catalogSettings.DisplayContactUsMenuItem
             };
             return model;

@@ -6024,7 +6024,7 @@ namespace Nop.Services.Installation
                 DisplayProductSearchMenuItem = !installSampleData,
                 DisplayCustomerInfoMenuItem = !installSampleData,
                 DisplayBlogMenuItem = !installSampleData,
-                DisplayBoardsMenuItem = !installSampleData,
+                DisplayForumsMenuItem = !installSampleData,
                 DisplayContactUsMenuItem = !installSampleData
             });
 

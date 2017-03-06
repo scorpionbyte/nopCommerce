@@ -70,7 +70,7 @@
     {
         <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
     }
-    @if (Model.ForumEnabled && Model.DisplayBoardsMenuItem)
+    @if (Model.ForumEnabled && Model.DisplayForumsMenuItem)
     {
         <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
     }
@@ -84,7 +84,7 @@
 @{
     var rootCategoriesResponsive = Model.Categories.ToList();
     //name it "Categories" if we have only categories. Otherwise, "Menu"
-    var responsiveMenuTitle = Model.IsHaveOnlyCategories ? T("Categories") : T("Menu");
+    var responsiveMenuTitle = Model.HasOnlyCategories ? T("Categories") : T("Menu");
     <div class="menu-toggle">@responsiveMenuTitle</div>
     <ul class="top-menu mobile">
         @Html.Widget("mob_header_menu_before")
@@ -117,7 +117,7 @@
         {
             <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
         }
-        @if (Model.ForumEnabled && Model.DisplayBoardsMenuItem)
+        @if (Model.ForumEnabled && Model.DisplayForumsMenuItem)
         {
             <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
         }

@@ -1011,12 +1011,12 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-3">
-                                @Html.OverrideStoreCheckboxFor(model => model.DisplayBoardsMenuItem_OverrideForStore, model => model.DisplayBoardsMenuItem, Model.ActiveStoreScopeConfiguration)
-                                @Html.NopLabelFor(model => model.DisplayBoardsMenuItem)
+                                @Html.OverrideStoreCheckboxFor(model => model.DisplayForumsMenuItem_OverrideForStore, model => model.DisplayForumsMenuItem, Model.ActiveStoreScopeConfiguration)
+                                @Html.NopLabelFor(model => model.DisplayForumsMenuItem)
                             </div>
                             <div class="col-md-9">
-                                @Html.NopEditorFor(model => model.DisplayBoardsMenuItem)
-                                @Html.ValidationMessageFor(model => model.DisplayBoardsMenuItem)
+                                @Html.NopEditorFor(model => model.DisplayForumsMenuItem)
+                                @Html.ValidationMessageFor(model => model.DisplayForumsMenuItem)
                             </div>
                         </div>
                         <div class="form-group">

@@ -869,7 +869,7 @@ namespace Nop.Admin.Infrastructure.Mapper
                     .ForMember(dest => dest.DisplayProductSearchMenuItem_OverrideForStore, mo => mo.Ignore())
                     .ForMember(dest => dest.DisplayCustomerInfoMenuItem_OverrideForStore, mo => mo.Ignore())
                     .ForMember(dest => dest.DisplayBlogMenuItem_OverrideForStore, mo => mo.Ignore())
-                    .ForMember(dest => dest.DisplayBoardsMenuItem_OverrideForStore, mo => mo.Ignore())
+                    .ForMember(dest => dest.DisplayForumsMenuItem_OverrideForStore, mo => mo.Ignore())
                     .ForMember(dest => dest.DisplayContactUsMenuItem_OverrideForStore, mo => mo.Ignore());
                 cfg.CreateMap<CatalogSettingsModel, CatalogSettings>()
                     .ForMember(dest => dest.PublishBackProductWhenCancellingOrders, mo => mo.Ignore())
