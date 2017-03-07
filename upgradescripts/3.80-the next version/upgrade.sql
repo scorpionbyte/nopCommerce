@@ -3009,6 +3009,11 @@ BEGIN
 END
 GO
 
+UPDATE [Product]
+SET [HasTierPrices] = 1
+WHERE [Id] IN (SELECT [ProductId] FROM [dbo].[TierPrice])
+GO
+
 --drop column
 IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id=object_id('[Product]') and NAME='SpecialPrice')
 BEGIN
