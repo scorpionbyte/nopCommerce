@@ -4735,3 +4735,11 @@ UPDATE [Product]
 SET [DownloadActivationTypeId] = 0
 WHERE [DownloadActivationTypeId] = 1
 GO
+
+ --new setting
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'adminareasettings.usericheditorinmessagetemplates')
+BEGIN
+    INSERT [Setting] ([Name], [Value], [StoreId])
+    VALUES (N'adminareasettings.usericheditorinmessagetemplates', N'False', 0)
+END
+GO

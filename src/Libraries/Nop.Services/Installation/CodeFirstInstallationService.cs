@@ -5935,6 +5935,7 @@ namespace Nop.Services.Installation
                 GridPageSizes = "10, 15, 20, 50, 100",
                 RichEditorAdditionalSettings = null,
                 RichEditorAllowJavaScript = false,
+                UseRichEditorInMessageTemplates = false,
                 UseIsoDateTimeConverterInJson = true
             });
 
