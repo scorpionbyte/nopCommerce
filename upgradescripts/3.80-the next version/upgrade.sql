@@ -2982,6 +2982,33 @@ BEGIN
 END
 GO
 
+--add a new column
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id=object_id('[TierPrice]') and NAME='StartDateTimeUtc')
+BEGIN
+	ALTER TABLE [TierPrice]
+	ADD [StartDateTimeUtc] datetime NULL
+END
+GO
+
+--add a new column
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id=object_id('[TierPrice]') and NAME='EndDateTimeUtc')
+BEGIN
+	ALTER TABLE [TierPrice]
+	ADD [EndDateTimeUtc] datetime NULL
+END
+GO
+
+--add a tier prices instead of product special prices 
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id=object_id('[Product]') and NAME='SpecialPrice')
+BEGIN
+	EXEC('
+        INSERT INTO [dbo].[TierPrice]([ProductId], [StoreId], [CustomerRoleId], [Quantity], [Price], [StartDateTimeUtc], [EndDateTimeUtc])
+        SELECT [Id], 0, NULL, 1, [SpecialPrice], [SpecialPriceStartDateTimeUtc], [SpecialPriceEndDateTimeUtc]
+        FROM [dbo].[Product]
+        WHERE [SpecialPrice] <> 0')
+END
+GO
+
 --drop column
 IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id=object_id('[Product]') and NAME='SpecialPrice')
 BEGIN
@@ -3016,22 +3043,6 @@ GO
 --delete setting
 DELETE FROM [Setting]
 WHERE [name] = N'producteditordettings.specialpriceenddate'
-GO
-
---add a new column
-IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id=object_id('[TierPrice]') and NAME='StartDateTimeUtc')
-BEGIN
-	ALTER TABLE [TierPrice]
-	ADD [StartDateTimeUtc] datetime NULL
-END
-GO
-
---add a new column
-IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id=object_id('[TierPrice]') and NAME='EndDateTimeUtc')
-BEGIN
-	ALTER TABLE [TierPrice]
-	ADD [EndDateTimeUtc] datetime NULL
-END
 GO
 
   --a stored procedure update
